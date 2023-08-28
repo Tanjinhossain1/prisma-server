@@ -30,9 +30,15 @@ router.delete(
     CourseController.deleteByIdFromDB
 );
 
-router.post("/:id/assign-faculties",CourseController.assignFaculties)
+router.post("/:id/assign-faculties",
+validateRequest(CourseValidation.assignOrRemoveFaculty),
+auth(ENUM_USER_ROLE.ADMIN,ENUM_USER_ROLE.ADMIN),
+CourseController.assignFaculties
+)
+
 router.delete(
     '/:id/remove-faculties',
+    auth(ENUM_USER_ROLE.ADMIN,ENUM_USER_ROLE.ADMIN),
     CourseController.removeFaculties
 );
 
