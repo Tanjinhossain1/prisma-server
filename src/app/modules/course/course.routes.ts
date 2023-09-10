@@ -16,13 +16,14 @@ router.post(
     CourseController.insertIntoDB
 );
 
-// / I intend to explore the update course functionalities in the upcoming module.
-  router.patch(
+
+router.patch(
     '/:id',
     validateRequest(CourseValidation.update),
     auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
     CourseController.updateOneInDB
-  );
+);
+
 
 router.delete(
     '/:id',
@@ -30,16 +31,16 @@ router.delete(
     CourseController.deleteByIdFromDB
 );
 
-router.post("/:id/assign-faculties",
-validateRequest(CourseValidation.assignOrRemoveFaculty),
-auth(ENUM_USER_ROLE.ADMIN,ENUM_USER_ROLE.ADMIN),
-CourseController.assignFaculties
-)
+router.post(
+    "/:id/assign-faculties",
+    validateRequest(CourseValidation.assignOrRemoveFaculties),
+    auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+    CourseController.assignFaculies)
 
 router.delete(
-    '/:id/remove-faculties',
-    auth(ENUM_USER_ROLE.ADMIN,ENUM_USER_ROLE.ADMIN),
-    CourseController.removeFaculties
-);
+    "/:id/remove-faculties",
+    validateRequest(CourseValidation.assignOrRemoveFaculties),
+    auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+    CourseController.removeFaculties)
 
 export const courseRoutes = router;
